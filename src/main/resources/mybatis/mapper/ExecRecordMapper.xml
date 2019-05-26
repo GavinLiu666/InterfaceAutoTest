@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangzai.dao.ExecRecordMapper">
+  <resultMap id="BaseResultMap" type="com.wangzai.pojo.ExecRecord">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="Task_name" jdbcType="VARCHAR" property="taskName" />
+    <result column="update_Time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="test_case_num" jdbcType="INTEGER" property="testCaseNum" />
+    <result column="test_case_num_succeed" jdbcType="INTEGER" property="testCaseNumSucceed" />
+    <result column="test_case_num_failed" jdbcType="INTEGER" property="testCaseNumFailed" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, Task_name, update_Time, test_case_num, test_case_num_succeed, test_case_num_failed
+  </sql>
+  <select id="selectByExample" parameterType="com.wangzai.pojo.ExecRecordExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from exec_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from exec_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from exec_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wangzai.pojo.ExecRecordExample">
+    delete from exec_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wangzai.pojo.ExecRecord">
+    insert into exec_record (id, Task_name, update_Time, 
+      test_case_num, test_case_num_succeed, test_case_num_failed
+      )
+    values (#{id,jdbcType=BIGINT}, #{taskName,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{testCaseNum,jdbcType=INTEGER}, #{testCaseNumSucceed,jdbcType=INTEGER}, #{testCaseNumFailed,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wangzai.pojo.ExecRecord">
+    insert into exec_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="taskName != null">
+        Task_name,
+      </if>
+      <if test="updateTime != null">
+        update_Time,
+      </if>
+      <if test="testCaseNum != null">
+        test_case_num,
+      </if>
+      <if test="testCaseNumSucceed != null">
+        test_case_num_succeed,
+      </if>
+      <if test="testCaseNumFailed != null">
+        test_case_num_failed,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="taskName != null">
+        #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="testCaseNum != null">
+        #{testCaseNum,jdbcType=INTEGER},
+      </if>
+      <if test="testCaseNumSucceed != null">
+        #{testCaseNumSucceed,jdbcType=INTEGER},
+      </if>
+      <if test="testCaseNumFailed != null">
+        #{testCaseNumFailed,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wangzai.pojo.ExecRecordExample" resultType="java.lang.Long">
+    select count(*) from exec_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update exec_record
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.taskName != null">
+        Task_name = #{record.taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_Time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.testCaseNum != null">
+        test_case_num = #{record.testCaseNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.testCaseNumSucceed != null">
+        test_case_num_succeed = #{record.testCaseNumSucceed,jdbcType=INTEGER},
+      </if>
+      <if test="record.testCaseNumFailed != null">
+        test_case_num_failed = #{record.testCaseNumFailed,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update exec_record
+    set id = #{record.id,jdbcType=BIGINT},
+      Task_name = #{record.taskName,jdbcType=VARCHAR},
+      update_Time = #{record.updateTime,jdbcType=TIMESTAMP},
+      test_case_num = #{record.testCaseNum,jdbcType=INTEGER},
+      test_case_num_succeed = #{record.testCaseNumSucceed,jdbcType=INTEGER},
+      test_case_num_failed = #{record.testCaseNumFailed,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wangzai.pojo.ExecRecord">
+    update exec_record
+    <set>
+      <if test="taskName != null">
+        Task_name = #{taskName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_Time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="testCaseNum != null">
+        test_case_num = #{testCaseNum,jdbcType=INTEGER},
+      </if>
+      <if test="testCaseNumSucceed != null">
+        test_case_num_succeed = #{testCaseNumSucceed,jdbcType=INTEGER},
+      </if>
+      <if test="testCaseNumFailed != null">
+        test_case_num_failed = #{testCaseNumFailed,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wangzai.pojo.ExecRecord">
+    update exec_record
+    set Task_name = #{taskName,jdbcType=VARCHAR},
+      update_Time = #{updateTime,jdbcType=TIMESTAMP},
+      test_case_num = #{testCaseNum,jdbcType=INTEGER},
+      test_case_num_succeed = #{testCaseNumSucceed,jdbcType=INTEGER},
+      test_case_num_failed = #{testCaseNumFailed,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

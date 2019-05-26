@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangzai.dao.WangZaiMapper">
+
+    <select id="selectTestCaseDetail" resultType="com.wangzai.pojo.TestCaseDetail" parameterType="java.lang.String">
+        select
+               a.name as testCaseName,a.url,a.param,a.response,b.taskName,b.url_id as id,b.exec_time as execTime ,
+               b.exec_response as execResponse,b.is_expected as isExpected
+        from request_info a
+        right join exec_detail b
+        on a.id=b.url_id
+        where b.taskName = #{taskName};
+    </select>
+
+</mapper>

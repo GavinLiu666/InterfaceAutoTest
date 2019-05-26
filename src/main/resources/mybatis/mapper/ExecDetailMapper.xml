@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangzai.dao.ExecDetailMapper">
+  <resultMap id="BaseResultMap" type="com.wangzai.pojo.ExecDetail">
+    <result column="taskName" jdbcType="VARCHAR" property="taskname" />
+    <result column="url_id" jdbcType="BIGINT" property="urlId" />
+    <result column="exec_time" jdbcType="TIMESTAMP" property="execTime" />
+    <result column="exec_response" jdbcType="VARCHAR" property="execResponse" />
+    <result column="is_expected" jdbcType="BIT" property="isExpected" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    taskName, url_id, exec_time, exec_response, is_expected
+  </sql>
+  <select id="selectByExample" parameterType="com.wangzai.pojo.ExecDetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from exec_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.wangzai.pojo.ExecDetailExample">
+    delete from exec_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wangzai.pojo.ExecDetail">
+    insert into exec_detail (taskName, url_id, exec_time, 
+      exec_response, is_expected)
+    values (#{taskname,jdbcType=VARCHAR}, #{urlId,jdbcType=BIGINT}, #{execTime,jdbcType=TIMESTAMP}, 
+      #{execResponse,jdbcType=VARCHAR}, #{isExpected,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wangzai.pojo.ExecDetail">
+    insert into exec_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="taskname != null">
+        taskName,
+      </if>
+      <if test="urlId != null">
+        url_id,
+      </if>
+      <if test="execTime != null">
+        exec_time,
+      </if>
+      <if test="execResponse != null">
+        exec_response,
+      </if>
+      <if test="isExpected != null">
+        is_expected,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="taskname != null">
+        #{taskname,jdbcType=VARCHAR},
+      </if>
+      <if test="urlId != null">
+        #{urlId,jdbcType=BIGINT},
+      </if>
+      <if test="execTime != null">
+        #{execTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="execResponse != null">
+        #{execResponse,jdbcType=VARCHAR},
+      </if>
+      <if test="isExpected != null">
+        #{isExpected,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wangzai.pojo.ExecDetailExample" resultType="java.lang.Long">
+    select count(*) from exec_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update exec_detail
+    <set>
+      <if test="record.taskname != null">
+        taskName = #{record.taskname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.urlId != null">
+        url_id = #{record.urlId,jdbcType=BIGINT},
+      </if>
+      <if test="record.execTime != null">
+        exec_time = #{record.execTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.execResponse != null">
+        exec_response = #{record.execResponse,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isExpected != null">
+        is_expected = #{record.isExpected,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update exec_detail
+    set taskName = #{record.taskname,jdbcType=VARCHAR},
+      url_id = #{record.urlId,jdbcType=BIGINT},
+      exec_time = #{record.execTime,jdbcType=TIMESTAMP},
+      exec_response = #{record.execResponse,jdbcType=VARCHAR},
+      is_expected = #{record.isExpected,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
